@@ -1,10 +1,10 @@
 #!/usr/bin/env groovy
 
-def call() {
+def call(String imageName) {
     echo 'Building Docker image'
     withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
-    sh 'docker build -t influous/infx-repo:dm1.1 .'
+    sh "docker build -t $imageName . "
     sh "echo '${PASSWORD}' | docker login -u $USER --password-stdin"
-    sh 'docker push influous/infx-repo:dm1.1'
+    sh "docker push $imageName"
     }
 }
