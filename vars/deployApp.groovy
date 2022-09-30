@@ -1,4 +1,4 @@
-
+#!/usr/bin/env groovy
 
 def call() {
     echo "Deploying to branch ${env.BRANCH_NAME}"
