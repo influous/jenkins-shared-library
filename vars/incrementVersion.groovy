@@ -7,5 +7,6 @@ def call() {
     versions:commit"
     def matchedFile = readFile('pom.xml') =~ '<version>(.+)</version>'
     def version = matchedFile[0][1] // text inside <version>
+    env.VERSION = version
     env.IMAGE_NAME = "$version-$BUILD_NUMBER"
 }
