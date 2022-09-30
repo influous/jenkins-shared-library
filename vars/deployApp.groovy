@@ -6,4 +6,5 @@ def call() {
     sshagent(['ec2-ssh-key']) {
     // -o flag avoids SSH popup
     sh "ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_ADDRESS} ${dockerCmd}"
+    }
 }
