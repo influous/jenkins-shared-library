@@ -2,7 +2,7 @@
 
 def call() {
     echo "Deploying to branch ${env.BRANCH_NAME}"
-    def shellCmds = "bash ./server_cmds.sh"
+    def shellCmds = "bash ./server_cmds.sh ${env.IMAGE_LATEST}"
     sshagent(['ec2-ssh-key']) {
     // -o flag avoids SSH popup
     sh "scp -o StrictHostKeyChecking=no server_cmds.sh ${EC2_USER}@${EC2_ADDRESS}:/home/ubuntu"
