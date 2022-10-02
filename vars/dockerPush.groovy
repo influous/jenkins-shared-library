@@ -2,6 +2,6 @@
 
 import com.example.Docker
 
-def call(String imageBase, String imageBuild) {
-    return new Docker(this).dockerPush(imageBase, imageBuild)
+def call(String imageBuild, String imageLatest) {
+    return new Docker(this).dockerPush(imageBuild, imageLatest)
 }
