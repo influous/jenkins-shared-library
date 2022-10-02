@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
 def call() {
-    echo "Deploying to branch ${env.BRANCH_NAME}"
+    echo "Deploying to EC2 instance on ${env.EC2_ADDRESS}"
     def shellCmds = "bash ./server_cmds.sh ${env.IMAGE_LATEST}"
     sshagent(['ec2-ssh-key']) {
     // -o flag avoids SSH popup
