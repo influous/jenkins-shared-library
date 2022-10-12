@@ -15,7 +15,7 @@ def call() {
             env.BRANCH_NAME == 'feature/deploy-on-k8s'
             try {
                 sh "kubectl create deployment nginx-deployment --image=nginx"
-            } catch (Expection e) {
+            } catch (Exception e) {
                 echo "Exception: " + e.toString()
             }
         }
