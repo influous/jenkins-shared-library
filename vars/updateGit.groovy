@@ -7,6 +7,7 @@ def call() {
     sh "git remote set-url origin https://${PASSWORD}@github.com/${USER}/devops-maven.git"
     sh 'git add .'
     sh 'git commit -m "CI: Version bump"'
-    sh 'git push origin HEAD:jenkins-jobs'
+    echo "Pushing to $env.BRANCH_NAME..."
+    sh "git push origin HEAD:$env.BRANCH_NAME"
     }
 }
