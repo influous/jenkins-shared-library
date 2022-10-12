@@ -10,14 +10,11 @@ def call() {
     sh "ssh -o StrictHostKeyChecking=no ${EC2_USER}@${EC2_ADDRESS} ${shellCmds}"
     }
 
-    when {
-        expression {
-            env.BRANCH_NAME == 'feature/deploy-on-k8s'
-            try {
-                sh "kubectl create deployment nginx-deployment --image=nginx"
-            } catch (Exception e) {
-                echo "Exception: " + e.toString()
-            }
+    if(env.BRANCH_NAME == 'feature/deploy-on-k8s') {
+        try {
+            sh "kubectl create deployment nginx-deployment --image=nginx"
+        } catch (Exception e) {
+            echo "Exception: " + e.toString()
         }
     }
 }
