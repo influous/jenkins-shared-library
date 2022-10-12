@@ -11,8 +11,10 @@ def call() {
     }
 
     if(env.BRANCH_NAME == 'feature/deploy-on-k8s') {
+        echo 'Deploying Docker image...'
         try {
-            sh "kubectl create deployment nginx-deployment --image=nginx"
+            sh "envsubst < kubernetes/deployment.yaml | kubectl apply -f -"
+            sh "envsubst < kubernetes/service.yaml | kubectl apply -f -"
         } catch (Exception e) {
             echo "Exception: " + e.toString()
         }
