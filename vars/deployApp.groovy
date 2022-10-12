@@ -12,11 +12,14 @@ def call() {
 
     if(env.BRANCH_NAME == 'feature/deploy-on-k8s') {
         echo 'Deploying Docker image...'
-        try {
-            sh "envsubst < kubernetes/deployment.yaml | kubectl apply -f -"
-            sh "envsubst < kubernetes/service.yaml | kubectl apply -f -"
-        } catch (Exception e) {
-            echo "Exception: " + e.toString()
+        withKubeConfig([credentialsId: 'lke-credentials', serverUrl: 'https://ab39570d-0578-4bb9-acb2-d06ce32ba0fd.eu-central-1.linodelke.net:443']) {
+            withCredentials([usernamePassword(credentialsId: 'docker-hub-repo', usernameVariable: 'USER', passwordVariable: 'PASSWORD')]) {
+                sh "kubectl create secret docker-registry my-registry-key --docker-server=docker.io --docker-username=$USER --docker-password=$PASSWORD"
+            }
+            sh 'envsubst < kubernetes/deployment.yaml | kubectl apply -f -'
+        }
+    } catch (Exception e) {
+        echo "An exception occurred: " + e.toString()   
         }
     }
 }
