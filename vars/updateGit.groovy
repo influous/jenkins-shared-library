@@ -8,6 +8,6 @@ def call() {
     sh 'git add .'
     sh 'git commit -m "CI: Version bump"'
     echo "Pushing to $env.BRANCH_NAME..."
-    sh "git push origin HEAD:$env.BRANCH_NAME"
+    sh "git push -f origin HEAD:$env.BRANCH_NAME"
     }
 }
